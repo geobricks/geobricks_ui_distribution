@@ -1,4 +1,4 @@
 geobricks_distribution_ui
 =========================
 
-## Distribution ui module
+Distribution ui module
