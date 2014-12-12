@@ -17,6 +17,23 @@ define([
     var global = this;
     function GEOBRICKS_UI_DISTRIBUTION() {
 
+        // TODO: quick fix for the ghg-demo
+        var loadingWindow;
+        this.loadingWindow = loadingWindow || (function () {
+            var pleaseWaitDiv = $('' +
+            '<div class="modal" id="pleaseWaitDialog" style="background-color: rgba(54, 25, 25, 0.1);" data-backdrop="static" data-keyboard="false">' +
+            '<div class="modal-body" style="color:#F0F0F0"><h1>Processing...</h1><i class="fa fa-refresh fa-spin fa-5x"></i></div>' +
+            '</div>');
+            return {
+                showPleaseWait: function() {
+                    pleaseWaitDiv.modal();
+                },
+                hidePleaseWait: function () {
+                    pleaseWaitDiv.modal('hide');
+                }
+            };
+        })();
+
         this.CONFIG = {
             lang: 'EN',
             placeholder: 'main_content_placeholder',
@@ -299,11 +316,11 @@ define([
     }
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.export_layers = function(uids, codes, email_address) {
-        //loadingWindow.showPleaseWait()
+        this.loadingWindow.showPleaseWait()
 
         if ( codes == "'world'") {
             var url = this.CONFIG.url_distribution_download_raster.replace(/{{LAYERS}}/gi, uids)
-           // loadingWindow.hidePleaseWait()
+            this.loadingWindow.hidePleaseWait()
             window.open(url, '_blank');
         }
         else {
@@ -325,18 +342,19 @@ define([
             }
             console.log(url);
             console.log(spatial_query);
+            var _this = this;
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: JSON.stringify(data),
                 contentType: 'application/json;charset=UTF-8',
                 success: function (response) {
-                    //loadingWindow.hidePleaseWait()
+                    _this.loadingWindow.hidePleaseWait()
                     response = (typeof response == 'string') ? $.parseJSON(response) : response;
                     window.open(response.url, '_blank');
                 },
                 error: function (err, b, c) {
-                    //loadingWindow.hidePleaseWait()
+                    _this.loadingWindow.hidePleaseWait()
                     console.log(err);
                 }
             });
