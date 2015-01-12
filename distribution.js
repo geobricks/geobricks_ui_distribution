@@ -18,21 +18,21 @@ define([
     function GEOBRICKS_UI_DISTRIBUTION() {
 
         // TODO: quick fix for the ghg-demo
-        var loadingWindow;
-        this.loadingWindow = loadingWindow || (function () {
-            var pleaseWaitDiv = $('' +
-            '<div class="modal" id="pleaseWaitDialog" style="background-color: rgba(54, 25, 25, 0.1);" data-backdrop="static" data-keyboard="false">' +
-            '<div class="modal-body" style="color:#F0F0F0"><h1>Processing...</h1><i class="fa fa-refresh fa-spin fa-5x"></i></div>' +
-            '</div>');
-            return {
-                showPleaseWait: function() {
-                    pleaseWaitDiv.modal();
-                },
-                hidePleaseWait: function () {
-                    pleaseWaitDiv.modal('hide');
-                }
-            };
-        })();
+        //GEOBRICKS_UI_DISTRIBUTION.loadingWindow = loadingWindow || (function () {
+        //    var pleaseWaitDiv = $('' +
+        //    '<div class="modal" id="pleaseWaitDialog" style="background-color: rgba(54, 25, 25, 0.1);" data-backdrop="static" data-keyboard="false">' +
+        //    '<div class="modal-body" style="color:#F0F0F0"><h1>Processing...</h1><i class="fa fa-refresh fa-spin fa-5x"></i></div>' +
+        //    '</div>');
+        //    return {
+        //        showPleaseWait: function() {
+        //            this.pleaseWaitDiv.modal();
+        //            this.pleaseWaitDiv.modal();
+        //        },
+        //        hidePleaseWait: function () {
+        //            this.pleaseWaitDiv.modal('hide');
+        //        }
+        //    };
+        //})();
 
         this.CONFIG = {
             lang: 'EN',
@@ -40,17 +40,16 @@ define([
             template_id: 'map',
 
             areas: {
-                query: "SELECT adm0_code, adm0_name FROM spatial.gaul0_2014_2013_3857 WHERE disp_area = 'NO' ORDER BY adm0_name"
+                query: "SELECT adm0_code, adm0_name FROM spatial.gaul0_2015_4326 WHERE disp_area = 'NO' ORDER BY adm0_name"
+
             },
 
             // default layer and map
             m: null,
             l: null,
 
-            l_gaul0_highlight: null,
+            l_gaul0_highlight: null
 
-            // distribution query
-            spatial_query: '{ "query_extent" : "SELECT ST_AsGeoJSON(ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), {{SRID}})) FROM {{SCHEMA}}.gaul0_2014_2013_3857 WHERE adm0_code IN ({{CODES}})", "query_layer" : "SELECT * FROM {{SCHEMA}}.gaul0_2014_2013_3857 WHERE adm0_code IN ({{CODES}})"}'
         }
     }
 
@@ -72,11 +71,22 @@ define([
         var _this = this;
         $("#pgeo_dist_export_button").bind( "click", function() {
             var areas = $("#pgeo_dist_areas_select").chosen().val();
-            var uids =  $("#pgeo_dist_layers_select").chosen().val();
-            if ( uids[0] == "") uids.splice(0, 1)
-            var codes = _this.get_string_codes(areas)
+            var l = $("#pgeo_dist_layers_select").chosen().val();
+            var layers = []
+            for( var i=0; i < l.length; i++) {
+                var layer = JSON.parse(l[i])
+                console.log(layer);
+                layers.push({
+                    "workspace": layer.workspace,
+                    "layerName": layer.layerName,
+                    "datasource": layer.datasource
+                })
+            }
+            console.log(layers);
+            //var codes = _this.get_string_codes(areas, "'")
+            console.log(areas);
             var email_address = $("#pgeo_dist_email_address").val();
-            _this.export_layers(uids, codes, email_address)
+            _this.export_layers(layers, areas, email_address)
         });
     }
 
@@ -145,9 +155,10 @@ define([
                 response = (typeof response == 'string')? $.parseJSON(response): response;
                 var html = '<option value=""></option>';
                 for(var i=0; i < response.length; i++) {
-                    console.log(response[i]);
+                    //console.log(response[i]["dsd"]);
+                    var dsd = JSON.stringify(response[i]["dsd"])
                     //TODO: remove the replace. Do it with the DSD?
-                    html += '<option value="' + response[i].uid.replace('@',":") + '">' + response[i].title[_this.CONFIG.lang.toLocaleUpperCase()] + '</option>';
+                    html += "<option value='" + dsd + "'>" + response[i]['title'][_this.CONFIG.lang.toLocaleUpperCase()] + "</option>";
                 }
                 $('#' + id).append(html);
                 $('#' + id).trigger("chosen:updated");
@@ -175,10 +186,7 @@ define([
     }
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.on_change_layer = function(id) {
-        console.log(id);
         var values = $("#" + id + ' option:selected');
-        console.log(values);
-
         if (this.CONFIG.l) {
             this.CONFIG.m.removeLayer(this.CONFIG.l)
         }
@@ -186,22 +194,21 @@ define([
         if ( values.length > 0 ) {
 
             if (values[0].value == '') {
-                console.log(values[0]);
                 values.splice(0, 1);
-            }
-
-            for (var i = 0; i < values.length; i++) {
-                console.log(values[i].text + " ||| " + values[i].value);
             }
 
             if (values) {
                 var layer = {};
-                layer.layers = values[0].value
+                var l = JSON.parse(values[0].value);
+                var workspace = l.workspace
+                var layerName = l.layerName
+                layer.layers = workspace + ":" + layerName
                 layer.layertitle = values[0].text
                 layer.urlWMS = this.CONFIG.url_geoserver_wms
                 layer.opacity = '0.75';
                 layer.defaultgfi = true;
                 layer.openlegend = true;
+
                 this.CONFIG.l = new FM.layer(layer, this.CONFIG.m, {noWrap: true});
                 this.CONFIG.m.addLayer(this.CONFIG.l);
             }
@@ -241,10 +248,10 @@ define([
                     var values = $(this).val()
                     if ( values ) {
                         if ( $(this).val() != "world") {
-                            var codes = _this.get_string_codes(values)
+                            var codes = _this.get_string_codes(values, "'")
                             _this.CONFIG.l_gaul0_highlight.layer.cql_filter = "adm0_code IN (" + codes + ")";
                             _this.CONFIG.l_gaul0_highlight.redraw()
-                            _this.zoom_to(codes)
+                            _this.zoom_to(_this.get_string_codes(values, ""))
                         }
                     }
                     else {
@@ -315,72 +322,54 @@ define([
         }
     }
 
-    GEOBRICKS_UI_DISTRIBUTION.prototype.export_layers = function(uids, codes, email_address) {
-        this.loadingWindow.showPleaseWait()
+    GEOBRICKS_UI_DISTRIBUTION.prototype.export_layers = function(layers, codes, email_address) {
+        //GEOBRICKS_UI_DISTRIBUTION.loadingWindow.showPleaseWait()
+        var url = this.CONFIG.url_distribution_raster_spatial_query;
 
-        if ( codes == "'world'") {
-            var url = this.CONFIG.url_distribution_download_raster.replace(/{{LAYERS}}/gi, uids)
-            this.loadingWindow.hidePleaseWait()
-            window.open(url, '_blank');
-        }
-        else {
-            var url = this.CONFIG.url_distribution_rasters_spatial_query;
-            //url = url.replace(/{{LAYERS}}/gi, uids)
-            var spatial_query = this.CONFIG.spatial_query;
-            spatial_query = spatial_query.replace(/{{CODES}}/gi, codes);
-            //url = url.replace(/{{SPATIAL_QUERY}}/gi, spatial_query);
-            var data = {
-                "raster": {
-                    "uids": uids
-//                        ,"ftp_uids": ["fenix|maize_area1_4326"]
-                },
-                "vector": spatial_query
-            }
-            // TODO: check if is a valid email address
-            if (email_address != "") {
-                data.email_address = email_address
-            }
-            console.log(url);
-            console.log(spatial_query);
-            var _this = this;
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: JSON.stringify(data),
-                contentType: 'application/json;charset=UTF-8',
-                success: function (response) {
-                    _this.loadingWindow.hidePleaseWait()
-                    response = (typeof response == 'string') ? $.parseJSON(response) : response;
-                    window.open(response.url, '_blank');
-                },
-                error: function (err, b, c) {
-                    _this.loadingWindow.hidePleaseWait()
-                    console.log(err);
+        var data = {
+            "raster": layers,
+            "vector": {
+                "type": "database",
+                "options": {
+                    "db": "spatial",
+                    "layer": "gaul0_2015_4326",
+                    "column": "adm0_code",
+                    "codes": codes
                 }
-            });
+            }
         }
+        console.log(data);
+        // TODO: check if is a valid email address
+        if (email_address != "") {
+            data.email_address = email_address
+        }
+        var _this = this;
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(data),
+            contentType: 'application/json;charset=UTF-8',
+            success: function (response) {
+                //GEOBRICKS_UI_DISTRIBUTION.loadingWindow.hidePleaseWait()
+                response = (typeof response == 'string') ? $.parseJSON(response) : response;
+                window.open(response.url, '_blank');
+            },
+            error: function (err, b, c) {
+                //GEOBRICKS_UI_DISTRIBUTION.loadingWindow.hidePleaseWait()
+                console.log(err);
+            }
+        });
     }
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.zoom_to = function(codes) {
-        var query = "SELECT ST_AsGeoJSON(ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326)) FROM spatial.gaul0_2014_2013_3857 WHERE adm0_code IN ("+ codes +")"
-        var url = this.CONFIG.url_spatialquery_db_spatial
-        url += query;
+        var url = this.CONFIG.url_spatialquery_db_spatial_bbox.replace("{{CODES}}", codes);
         var _this = this;
         $.ajax({
             type : 'GET',
             url : url,
             success : function(response) {
                 response = (typeof response == 'string')? $.parseJSON(response): response;
-                var polygon = $.parseJSON(response[0][0])
-                var coordinates = polygon.coordinates;
-                var minlat = coordinates[0][0][1]
-                var minlon = coordinates[0][0][0]
-                var maxlat = coordinates[0][1][1]
-                var maxlon = coordinates[0][2][0]
-                _this.CONFIG.m.map.fitBounds([
-                    [minlat, minlon],
-                    [maxlat, maxlon]
-                ]);
+                _this.CONFIG.m.map.fitBounds(response);
             },
             error : function(err, b, c) {
                 alert(err)
@@ -388,10 +377,11 @@ define([
         });
     }
 
-    GEOBRICKS_UI_DISTRIBUTION.prototype.get_string_codes = function(values) {
+    GEOBRICKS_UI_DISTRIBUTION.prototype.get_string_codes = function(values, apex) {
         var codes= ""
+        apex = typeof apex !== 'undefined' ? apex : "'";
         for( var i=0; i < values.length; i++) {
-            codes += "'"+ values[i] +"',"
+            codes += apex + values[i] + apex+","
         }
         return codes.substring(0, codes.length - 1);
     }
