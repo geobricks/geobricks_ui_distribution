@@ -1,0 +1,32 @@
+{
+   "name": "geobricks_ui_distribution",
+   "label": {
+      "en": "Geobricks UI Distribution"
+   },
+   "language": "JavaScript",
+   "description": "UI Distribution module.",
+   "license": "GPL2",
+   "homepage": "http://geobricks.org/",
+   "keywords": [
+      "gis", "python", "trmm", "download", "plugin"
+   ],
+   "version": "1.0.0",
+   "contributors": [
+      {
+         "name": "Simone Murzilli",
+         "email": "simone.murzilli@gmail.com"
+      },
+      {
+         "name": "Guido Barbaglia",
+         "email": "guido.barbaglia@gmail.com"
+      }
+   ],
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/geobricks/geobricks_ui_distribution"
+   },
+   "devDependencies": {
+      "grunt": "~0.4.5",
+      "grunt-markdown": "~0.7.0"
+   }
+}
