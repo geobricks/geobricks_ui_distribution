@@ -163,9 +163,9 @@ define([
                 $('#' + id).append(html);
                 $('#' + id).trigger("chosen:updated");
 
-                $( "#" + id ).change(function () {
-                    _this.on_change_layer(id)
-                });
+                //$( "#" + id ).change(function () {
+                //    _this.on_change_layer(id)
+                //});
 
                 var select_all = id.replace("_select", "_select_all")
                 var deselect_all = id.replace("_select", "_deselect_all")
@@ -180,6 +180,10 @@ define([
                     $('#' + id).trigger("chosen:updated");
                     _this.on_change_layer(id)
                 });
+
+                $( "#pgeo_dist_layers_add_layer").click(function () {
+                    _this.on_change_layer(id)
+                });
             },
             error : function(err, b, c) {}
         });
@@ -187,9 +191,9 @@ define([
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.on_change_layer = function(id) {
         var values = $("#" + id + ' option:selected');
-        if (this.CONFIG.l) {
-            this.CONFIG.m.removeLayer(this.CONFIG.l)
-        }
+        //if (this.CONFIG.l) {
+        //    this.CONFIG.m.removeLayer(this.CONFIG.l)
+        //}
 
         if ( values.length > 0 ) {
 
