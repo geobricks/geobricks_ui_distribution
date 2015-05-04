@@ -36,12 +36,13 @@ define([
 
         this.CONFIG = {
             lang: 'EN',
+            // TODO: temporary fix to remove
+            langISO2: 'EN',
             placeholder: 'main_content_placeholder',
             template_id: 'map',
 
             areas: {
                 query: "SELECT adm0_code, adm0_name FROM spatial.gaul0_2015_4326 WHERE disp_area = 'NO' ORDER BY adm0_name"
-
             },
 
             // default layer and map
@@ -75,16 +76,12 @@ define([
             var layers = []
             for( var i=0; i < l.length; i++) {
                 var layer = JSON.parse(l[i])
-                console.log(layer);
                 layers.push({
                     "workspace": layer.workspace,
                     "layerName": layer.layerName,
                     "datasource": layer.datasource
                 })
             }
-            console.log(layers);
-            //var codes = _this.get_string_codes(areas, "'")
-            console.log(areas);
             var email_address = $("#pgeo_dist_email_address").val();
             _this.export_layers(layers, areas, email_address)
         });
@@ -155,10 +152,9 @@ define([
                 response = (typeof response == 'string')? $.parseJSON(response): response;
                 var html = '<option value=""></option>';
                 for(var i=0; i < response.length; i++) {
-                    //console.log(response[i]["dsd"]);
                     var dsd = JSON.stringify(response[i]["dsd"])
                     //TODO: remove the replace. Do it with the DSD?
-                    html += "<option value='" + dsd + "'>" + response[i]['title'][_this.CONFIG.lang.toLocaleUpperCase()] + "</option>";
+                    html += "<option value='" + dsd + "'>" + response[i]['title'][_this.CONFIG.langISO2.toLocaleUpperCase()] + "</option>";
                 }
                 $('#' + id).append(html);
                 $('#' + id).trigger("chosen:updated");
@@ -342,7 +338,6 @@ define([
                 }
             }
         }
-        console.log(data);
         // TODO: check if is a valid email address
         if (email_address != "") {
             data.email_address = email_address
