@@ -17,23 +17,6 @@ define([
     var global = this;
     function GEOBRICKS_UI_DISTRIBUTION() {
 
-        // TODO: quick fix for the ghg-demo
-        //GEOBRICKS_UI_DISTRIBUTION.loadingWindow = loadingWindow || (function () {
-        //    var pleaseWaitDiv = $('' +
-        //    '<div class="modal" id="pleaseWaitDialog" style="background-color: rgba(54, 25, 25, 0.1);" data-backdrop="static" data-keyboard="false">' +
-        //    '<div class="modal-body" style="color:#F0F0F0"><h1>Processing...</h1><i class="fa fa-refresh fa-spin fa-5x"></i></div>' +
-        //    '</div>');
-        //    return {
-        //        showPleaseWait: function() {
-        //            this.pleaseWaitDiv.modal();
-        //            this.pleaseWaitDiv.modal();
-        //        },
-        //        hidePleaseWait: function () {
-        //            this.pleaseWaitDiv.modal('hide');
-        //        }
-        //    };
-        //})();
-
         this.CONFIG = {
             lang: 'EN',
             // TODO: temporary fix to remove
@@ -57,8 +40,6 @@ define([
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.init = function(config) {
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
-
-        //loadingWindow = new loadingWindow()
 
         var template = $(templates).filter('#' + this.CONFIG.template_id).html();
         $('#' + this.CONFIG.placeholder).html(templates);
@@ -187,9 +168,9 @@ define([
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.on_change_layer = function(id) {
         var values = $("#" + id + ' option:selected');
-        //if (this.CONFIG.l) {
-        //    this.CONFIG.m.removeLayer(this.CONFIG.l)
-        //}
+        if (this.CONFIG.l) {
+            this.CONFIG.m.removeLayer(this.CONFIG.l)
+        }
 
         if ( values.length > 0 ) {
 
@@ -208,8 +189,18 @@ define([
                 layer.opacity = '0.75';
                 layer.defaultgfi = true;
                 layer.openlegend = true;
+                layer.lang = "EN";
 
-                this.CONFIG.l = new FM.layer(layer, this.CONFIG.m, {noWrap: true});
+                /* TODO: check if raster */
+                layer.customgfi = {
+                    content: {
+                        /* TODO: change style classes */
+                        EN: "<div class='fm-legend-layertitle'><b>"+ layer.layertitle +"</b><div class='fm-popup-join-content'>Pixel Value {{GRAY_INDEX}}</div></div>"
+                    },
+                    showpopup: true
+                }
+
+                this.CONFIG.l = new FM.layer(layer, {noWrap: true});
                 this.CONFIG.m.addLayer(this.CONFIG.l);
             }
         }
@@ -295,7 +286,7 @@ define([
         layer.styles = "gaul0_line"
         layer.opacity='0.9';
         layer.zindex= 550;
-        this.CONFIG.l_gaul0 = new FM.layer(layer, this.CONFIG.m, {noWrap : true});
+        this.CONFIG.l_gaul0 = new FM.layer(layer, {noWrap : true});
         this.CONFIG.m.addLayer(this.CONFIG.l_gaul0);
 
         var layer = {};
@@ -308,7 +299,7 @@ define([
         layer.style = 'gaul0_highlight_polygon';
         layer.cql_filter="adm0_code IN (0)";
         layer.hideLayerInControllerList = true;
-        this.CONFIG.l_gaul0_highlight = new FM.layer(layer, this.CONFIG.m, {noWrap : true});
+        this.CONFIG.l_gaul0_highlight = new FM.layer(layer, {noWrap : true});
         this.CONFIG.m.addLayer(this.CONFIG.l_gaul0_highlight);
     }
 
