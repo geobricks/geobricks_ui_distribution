@@ -2,23 +2,21 @@ define([
     //'jquery',
     'mustache',
     'text!geobricks_ui_distribution/html/template.html',
-    //'FNX_MAPS_LOADING_WINDOW',
+    'i18n!geobricks_ui_distribution/nls/translate',
     'fenix-map',
     'highcharts',
     'bootstrap'], function (
     //$,
     Mustache,
-    templates
-    //loadingWindow
+    templates,
+    translate
 ) {
-
     'use strict';
 
-    var global = this;
     function GEOBRICKS_UI_DISTRIBUTION() {
 
         this.CONFIG = {
-            lang: 'EN',
+            lang: 'E',
             // TODO: temporary fix to remove
             langISO2: 'EN',
             placeholder: 'main_content_placeholder',
@@ -33,10 +31,8 @@ define([
             l: null,
 
             l_gaul0_highlight: null
-
         }
     }
-
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.init = function(config) {
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
@@ -46,7 +42,7 @@ define([
 
         this.build_dropdown_products('pgeo_dist_prod')
 
-        this.build_dropdown_gaul('pgeo_dist_areas')
+        //this.build_dropdown_gaul('pgeo_dist_areas')
 
         // build map
         this.build_map('pgeo_dist_map')
@@ -259,7 +255,7 @@ define([
     GEOBRICKS_UI_DISTRIBUTION.prototype.build_map = function(id) {
         var options = {
             plugins: { geosearch : false, mouseposition: false, controlloading : false, zoomControl: 'bottomright'},
-            guiController: { overlay : true,  baselayer: true,  wmsLoader: true },
+            guiController: { overlay : true,  baselayer: true,  wmsLoader: false },
             gui: {disclaimerfao: true }
         }
 
@@ -281,91 +277,15 @@ define([
 
         var layer = {};
         layer.layers = "fenix:gaul0_line_3857"
-        layer.layertitle = "Boundaries"
-        layer.urlWMS = "http://fenixapps2.fao.org/geoserver-demo"
+        layer.layertitle = translate.boundaries;
+        layer.urlWMS = "http://fenix.fao.org/geoserver"
         layer.styles = "gaul0_line"
         layer.opacity='0.9';
         layer.zindex= 550;
         this.CONFIG.l_gaul0 = new FM.layer(layer, {noWrap : true});
         this.CONFIG.m.addLayer(this.CONFIG.l_gaul0);
-
-        var layer = {};
-        layer.layers = "gaul0_3857"
-        layer.layertitle = "Administrative unit1"
-        layer.urlWMS = this.CONFIG.url_geoserver_wms
-        layer.opacity='0.7';
-        layer.zindex= 500;
-        layer.style = 'gaul0_highlight_polygon';
-        layer.style = 'gaul0_highlight_polygon';
-        layer.cql_filter="adm0_code IN (0)";
-        layer.hideLayerInControllerList = true;
-        this.CONFIG.l_gaul0_highlight = new FM.layer(layer, {noWrap : true});
-        this.CONFIG.m.addLayer(this.CONFIG.l_gaul0_highlight);
     }
 
-    GEOBRICKS_UI_DISTRIBUTION.prototype.collector_to_build_stats = function() {
-        var gaul = $("#ew_drowdown_gaul_select").chosen().val();
-        var threshold = $("#ew_threshold").val();
-        // TODO: check threshold
-        // TODO: function
-        if ( this.CONFIG.l.layer.layers && gaul.length > 0) {
-            build_stats(this.CONFIG.l.layer.layers, gaul, threshold, "ew_stats")
-        }
-    }
-
-    GEOBRICKS_UI_DISTRIBUTION.prototype.export_layers = function(layers, codes, email_address) {
-        //GEOBRICKS_UI_DISTRIBUTION.loadingWindow.showPleaseWait()
-        var url = this.CONFIG.url_distribution_raster_spatial_query;
-
-        var data = {
-            "raster": layers,
-            "vector": {
-                "type": "database",
-                "options": {
-                    "db": "spatial",
-                    "layer": "gaul0_2015_4326",
-                    "column": "adm0_code",
-                    "codes": codes
-                }
-            }
-        }
-        // TODO: check if is a valid email address
-        if (email_address != "") {
-            data.email_address = email_address
-        }
-        var _this = this;
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: JSON.stringify(data),
-            contentType: 'application/json;charset=UTF-8',
-            success: function (response) {
-                //GEOBRICKS_UI_DISTRIBUTION.loadingWindow.hidePleaseWait()
-                response = (typeof response == 'string') ? $.parseJSON(response) : response;
-                window.open(response.url, '_blank');
-            },
-            error: function (err, b, c) {
-                //GEOBRICKS_UI_DISTRIBUTION.loadingWindow.hidePleaseWait()
-                console.log(err);
-            }
-        });
-    }
-
-    GEOBRICKS_UI_DISTRIBUTION.prototype.zoom_to = function(codes) {
-        var url = this.CONFIG.url_spatialquery_db_spatial_bbox.replace("{{CODES}}", codes);
-        var _this = this;
-        $.ajax({
-            type : 'GET',
-            url : url,
-            success : function(response) {
-                response = (typeof response == 'string')? $.parseJSON(response): response;
-                _this.CONFIG.m.map.fitBounds(response);
-            },
-            error : function(err, b, c) {
-                alert(err)
-            }
-        });
-    }
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.get_string_codes = function(values, apex) {
         var codes= ""
