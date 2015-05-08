@@ -255,8 +255,16 @@ define([
             var cached_layers = this.CONFIG.cached_layers;
             if (cached_layers) {
                 if (cached_layers.length > 0) {
-                    console.log("HERE");
-                    if (year) {
+                    if (layer.layerName) {
+                        for (var i in cached_layers) {
+                            if (cached_layers[i].dsd.layerName == layer.layerName){
+                                layerDef = cached_layers[i];
+                                break;
+                            }
+                        }
+                    }
+
+                    else if (year) {
                         var fromDate = new Date(year, 0, 1).getTime();
                         for (var i in cached_layers) {
                             if (cached_layers[i].meContent.seCoverage.coverageTime.from == fromDate){

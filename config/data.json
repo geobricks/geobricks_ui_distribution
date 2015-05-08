@@ -72,9 +72,21 @@
         "description": "organic_soils_area_description",
         "downloadID": "organic_soils_area",
         "layer":[
-          {"title": "organic_soils"},
-          {"title": "cropland_organic_soils"},
-          {"title": "grassland_organic_soils"}
+          {
+            "#COMMENT": "MISSING!",
+            "title": "organic_soils",
+            "coverageSector": "cultivationorganicsoils"
+          },
+          {
+            "title": "cropland_organic_soils",
+            "coverageSector": "cultivationorganicsoils",
+            "layerName": "cultivation_organicsoils_area_cropland_3857"
+          },
+          {
+            "title": "grassland_organic_soils",
+            "coverageSector": "cultivationorganicsoils",
+            "layerName": "cultivation_organicsoils_area_grassland_3857"
+          }
         ]
       }
     ]
