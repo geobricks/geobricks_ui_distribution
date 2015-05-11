@@ -4,13 +4,14 @@
     "description": "processed_activity_data_description",
     "product": [
       {
-        "title": "gfed4_burned_area_yearly",
-        "description": "gfed4_burned_area_yearly_description",
-        "downloadID": "gfed4_burned_area_yearly",
+        "title": "gfed4_burned_areas_yearly",
+        "description": "gfed4_burned_areas_yearly_description",
+        "downloadID": "GFED4_burned_areas",
         "layer":[
           {
-            "#COMMENT": "MISSING!",
-            "title": "humid_tropical_forest"
+            "#COMMENT": "ADDED!",
+            "title": "humid_tropical_forest",
+            "coverageSector": "gfed4_burnedareas_humidtropicalforests"
           },
           {
             "title": "other_forest",
@@ -18,59 +19,73 @@
           },
           {
             "title": "closed_shrubland",
-            "coverageSector": ""
+            "coverageSector": "gfed4_burnedareas_closedshrubland"
           },
           {
             "title": "open_shrubland",
-            "coverageSector": ""
+            "coverageSector": "gfed4_burnedareas_openshrubland"
           },
           {
             "title": "woody_savanna",
-            "coverageSector": ""
+            "coverageSector": "gfed4_burnedareas_woodysavanna"
           },
           {
             "title": "savanna",
-            "coverageSector": ""
+            "coverageSector": "gfed4_burnedareas_savanna"
           },
           {
             "title": "grassland",
-            "coverageSector": ""
+            "coverageSector": "gfed4_burnedareas_grassland"
           },
           {
-            "title": "peatland",
-            "coverageSector": ""
+            "title": "peatlands",
+            "coverageSector": "gfed4_burnedareas_peatlands"
           }
         ]
       },
       {
         "title": "burned_dry_matter_yearly",
         "description": "burned_dry_matter_yearly_description",
-        "downloadID": "burned_dry_matter_yearly",
+        "downloadID": "Burned_dry_matter",
         "layer":[
           {
             "title": "humid_tropical_forest",
-            "coverageSector": ""
+            "coverageSector": "dm_burning_humidtropicalforests"
           },
-          {"title": "other_forest",
-            "coverageSector": ""},
-          {"title": "closed_shrubland",
-            "coverageSector": ""},
-          {"title": "open_shrubland",
-            "coverageSector": ""},
-          {"title": "woody_savanna",
-            "coverageSector": ""},
-          {"title": "savanna",
-            "coverageSector": ""},
-          {"title": "grassland",
-            "coverageSector": ""},
-          {"title": "peatland",
-            "coverageSector": ""}
+          {
+            "title": "other_forest",
+            "coverageSector": "dm_burning_otherforests"
+          },
+          {
+            "title": "closed_shrubland",
+            "coverageSector": "dm_burning_closedshrublands"
+          },
+          {
+            "title": "open_shrubland",
+            "coverageSector": "dm_burning_openshrublands"
+          },
+          {
+            "title": "woody_savanna",
+            "coverageSector": "dm_burning_woodysavanna"
+          },
+          {
+            "title": "savanna",
+            "coverageSector": "dm_burning_savanna"
+          },
+          {
+            "title": "grassland",
+            "coverageSector": "dm_burning_grasslands"
+          },
+          {
+            "title": "peatlands",
+            "coverageSector": "dm_burning_peatlands"
+          }
         ]
       },
       {
         "title": "organic_soils_area",
         "description": "organic_soils_area_description",
-        "downloadID": "organic_soils_area",
+        "downloadID": "Organic_soils_area",
         "layer":[
           {
             "#COMMENT": "MISSING!",
@@ -99,6 +114,57 @@
         "title": "fuel_biomass_factors",
         "description": "fuel_biomass_factors_description",
         "downloadID": "fuel_biomass_factors_factors",
+        "global": true,
+        "layer":[
+          {
+            "title": "humid_tropical_forest",
+            "coverageSector": "fuelbiomass",
+            "layerName": "burning_tropical_forests_fuelbiomass_3857"
+          },
+          {
+            "#COMMENT": "MISSING!",
+            "title": "other_forest",
+            "coverageSector": "fuelbiomass",
+            "layerName": "burning_otherforests_fuelbiomass_3857"
+          },
+          {
+            "#COMMENT": "MISSING!",
+            "title": "closed_shrubland",
+            "coverageSector": "fuelbiomass",
+            "layerName": ":burning_closedshrublands_fuelbiomass_3857"
+          },
+          {
+            "title": "open_shrubland",
+            "coverageSector": "fuelbiomass",
+            "layerName": "burning_openshrublands_fuelbiomass_3857"
+          },
+          {
+            "title": "woody_savanna",
+            "coverageSector": "fuelbiomass",
+            "layerName": "burning_woodysavanna_fuelbiomass_3857"
+          },
+          {
+            "title": "savanna",
+            "coverageSector": "fuelbiomass",
+            "layerName": "burning_savanna_fuelbiomass_3857"
+          },
+          {
+            "title": "grassland",
+            "coverageSector": "fuelbiomass",
+            "layerName": "burning_grasslands_fuelbiomass_3857"
+          },
+          {
+            "title": "peatlands",
+            "coverageSector": "fuelbiomass",
+            "layerName": "burning_peatland_fuelbiomass_3857"
+          }
+        ]
+      },
+      {
+        "title": "emission_factors",
+        "description": "emission_factors_description",
+        "downloadID": "emission_factors_factors",
+        "global": true,
         "layer":[
           {"title": "humid_tropical_forest"},
           {"title": "other_forest"},
@@ -107,31 +173,9 @@
           {"title": "woody_savanna"},
           {"title": "savanna"},
           {"title": "grassland"},
-          {"title": "peatland"}
-        ]
-      },
-      {
-        "title": "emission_factors1",
-        "description": "emission_factors_description1",
-        "downloadID": "emission_factors_factors1",
-        "layer":[
-          {"title": "humid_tropical_forest"},
-          {"title": "other_forest"},
-          {"title": "closed_shrubland"},
-          {"title": "open_shrubland"},
-          {"title": "woody_savanna"},
-          {"title": "savanna"},
-          {"title": "grassland"},
-          {"title": "peatland"}
-        ]
-      },
-      {
-        "title": "emission_factors2",
-        "description": "emission_factors_description2",
-        "downloadID": "emission_factors2",
-        "layer":[
+          {"title": "peatlands"},
           {"title": "cropland_organic_soils"},
-          {"title": "greassland_organic_soils"}
+          {"title": "grassland_organic_soils"}
         ]
       }
     ]
@@ -143,34 +187,54 @@
       {
         "title": "climate",
         "description": "climate_description",
-        "downloadID": "climate",
+        "downloadID": "Climate",
         "layer":[
-          {"title": "jrc_climate_zone_map"}
+          {
+            "title": "jrc_climate_zone_map",
+            "coverageSector": "jrc_climate",
+            "layerName": "jrc_climate_zone_025deg_3857"
+          }
         ]
       },
       {
         "title": "ecology",
         "description": "ecology_description",
-        "downloadID": "ecology",
+        "downloadID": "Ecology",
         "layer":[
-          {"title": "global_ecological_zones_gez2010"}
+          {
+            "title": "global_ecological_zones_gez2010",
+            "coverageSector": "gez2010",
+            "layerName": "gez2010_3857"
+          }
         ]
       },
       {
         "title": "livestock",
         "description": "livestock_description",
-        "downloadID": "livestock",
+        "downloadID": "Livestock",
         "layer":[
-          {"title": "gridded_livestock_cattle"},
-          {"title": "gridded_livestock_sheep"}
+          {
+            "title": "gridded_livestock_cattle",
+            "coverageSector": "griddedlivestock",
+            "layerName": "griddedlivestock_cattle_3857"
+          },
+          {
+            "title": "gridded_livestock_sheep",
+            "coverageSector": "griddedlivestock",
+            "layerName": "griddedlivestock_sheep_3857"
+          }
         ]
       },
       {
         "title": "land_cover",
         "description": "land_cover_description",
-        "downloadID": "land_cover",
+        "downloadID": "Land_Cover",
         "layer":[
-          {"title": "glocal_land_cover_glc2000"}
+          {
+            "title": "global_land_cover_glc2000",
+            "coverageSector": "glc2000",
+            "layerName": "glc2000_3857"
+          }
         ]
       }
     ]
@@ -182,64 +246,155 @@
       {
         "title": "faostat_fire_co2_emission_estimates_yearly",
         "description": "faostat_fire_co2_emission_estimates_yearly_description",
-        "downloadID": "faostat_fire_co2_emission_estimates_yearly",
+        "downloadID": "FAOSTAT_fire_CO2_emission_estimates",
         "layer":[
-          {"title": "humid_tropical_forest"},
-          {"title": "other_forest"},
-          {"title": "closed_shrubland"},
-          {"title": "open_shrubland"},
-          {"title": "woody_savanna"},
-          {"title": "savanna"},
-          {"title": "grassland"},
-          {"title": "peatland"}
+          {
+            "title": "humid_tropical_forest",
+            "coverageSector": "co2_emissions_burning_humidtropicalforests"
+          },
+          {
+            "title": "other_forest",
+            "coverageSector": "co2_emissions_burning_otherforests"
+          },
+          {
+            "title": "closed_shrubland",
+            "coverageSector": "co2_emissions_burning_closedshrublands"
+          },
+          {
+            "title": "open_shrubland",
+            "coverageSector": "co2_emissions_burning_otherforests"
+          },
+          {
+            "title": "woody_savanna",
+            "coverageSector": "co2_emissions_burning_woodysavanna"
+          },
+          {
+            "title": "savanna",
+            "coverageSector": "co2_emissions_burning_savanna"
+          },
+          {
+            "title": "grassland",
+            "coverageSector": "co2_emissions_burning_grasslands"
+          },
+          {
+            "title": "peatlands",
+            "coverageSector": "co2_emissions_burning_peatlands"
+          }
         ]
       },
       {
         "title": "faostat_fire_n2o_emission_estimates_yearly",
         "description": "faostat_fire_n2o_emission_estimates_yearly_description",
-        "downloadID": "faostat_fire_n2o_emission_estimates_yearly",
+        "downloadID": "FAOSTAT_fire_N2O_emission_estimates",
         "layer":[
-          {"title": "humid_tropical_forest"},
-          {"title": "other_forest"},
-          {"title": "closed_shrubland"},
-          {"title": "open_shrubland"},
-          {"title": "woody_savanna"},
-          {"title": "savanna"},
-          {"title": "grassland"},
-          {"title": "peatland"}
+          {
+            "title": "humid_tropical_forest",
+            "coverageSector": "n2o_emissions_burning_humidtropicalforests"
+          },
+          {
+            "title": "other_forest",
+            "coverageSector": "n2o_emissions_burning_otherforests"
+          },
+          {
+            "title": "closed_shrubland",
+            "coverageSector": "n2o_emissions_burning_closedshrublands"
+          },
+          {
+            "title": "open_shrubland",
+            "coverageSector": "n2o_emissions_burning_otherforests"
+          },
+          {
+            "title": "woody_savanna",
+            "coverageSector": "n2o_emissions_burning_woodysavanna"
+          },
+          {
+            "title": "savanna",
+            "coverageSector": "n2o_emissions_burning_savanna"
+          },
+          {
+            "title": "grassland",
+            "coverageSector": "n2o_emissions_burning_grasslands"
+          },
+          {
+            "title": "peatlands",
+            "coverageSector": "n2o_emissions_burning_peatlands"
+          }
         ]
       },
       {
         "title": "faostat_fire_ch4_emission_estimates_yearly",
         "description": "faostat_fire_ch4_emission_estimates_yearly_description",
-        "downloadID": "faostat_fire_ch4_emission_estimates_yearly",
+        "downloadID": "FAOSTAT_fire_CH4_emission_estimates",
         "layer":[
-          {"title": "humid_tropical_forest"},
-          {"title": "other_forest"},
-          {"title": "closed_shrubland"},
-          {"title": "open_shrubland"},
-          {"title": "woody_savanna"},
-          {"title": "savanna"},
-          {"title": "grassland"},
-          {"title": "peatland"}
+          {
+            "title": "humid_tropical_forest",
+            "coverageSector": "ch4_emissions_burning_humidtropicalforests"
+          },
+          {
+            "title": "other_forest",
+            "coverageSector": "ch4_emissions_burning_otherforests"
+          },
+          {
+            "title": "closed_shrubland",
+            "coverageSector": "ch4_emissions_burning_closedshrublands"
+          },
+          {
+            "title": "open_shrubland",
+            "coverageSector": "ch4_emissions_burning_otherforests"
+          },
+          {
+            "title": "woody_savanna",
+            "coverageSector": "ch4_emissions_burning_woodysavanna"
+          },
+          {
+            "title": "savanna",
+            "coverageSector": "ch4_emissions_burning_savanna"
+          },
+          {
+            "title": "grassland",
+            "coverageSector": "ch4_emissions_burning_grasslands"
+          },
+          {
+            "title": "peatlands",
+            "coverageSector": "ch4_emissions_burning_peatlands"
+          }
         ]
       },
       {
         "title": "faostat_cultivation_organic_soil_co2_emission_estimates",
         "description": "faostat_cultivation_organic_soil_co2_emission_estimates_description",
-        "downloadID": "faostat_cultivation_organic_soil_co2_emission_estimates",
+        "downloadID": "FAOSTAT_cultivation_of_organic_soil_CO2_emission_estimates",
         "layer":[
-          {"title": "cropland_organic_soils"},
-          {"title": "greassland_organic_soils"}
+          {
+            "title": "cropland_organic_soils",
+            "coverageSector": "co2_cultivationorganicsoils",
+            "layerName": "cultivation_organicsoils_co2_emissions_cropland_3857"
+          },
+          {
+            "#COMMENT": "MISSING!",
+            "title": "grassland_organic_soils",
+            "coverageSector": "co2_cultivationorganicsoils",
+            "layerName": "cultivation_organicsoils_co2_emissions_grassland_3857"
+          }
         ]
       },
       {
         "title": "faostat_cultivation_organic_soil_n2o_emission_estimates",
         "description": "faostat_cultivation_organic_soil_n2o_emission_estimates_description",
-        "downloadID": "faostat_cultivation_organic_soil_n2o_emission_estimates",
+        "downloadID": "FAOSTAT_cultivation_of_organic_soil_N2O_emission_estimates",
         "layer":[
-          {"title": "cropland_organic_soils"},
-          {"title": "greassland_organic_soils"}
+          {
+            "#COMMENT": "COVERAGE_SECTOR_IS_WRONG!",
+            "title": "cropland_organic_soils",
+            "coverageSector": "co2_cultivationorganicsoils",
+            "layerName": "cultivation_organicsoils_n2o_emissions_grassland_3857"
+          },
+          {
+            "#COMMENT": "COVERAGE_SECTOR_IS_WRONG!",
+            "title": "grassland_organic_soils",
+            "coverageSector": "co2_cultivationorganicsoils",
+            "layerName": "cultivation_organicsoils_n2o_emissions_grassland_3857"
+          }
         ]
       }
     ]
