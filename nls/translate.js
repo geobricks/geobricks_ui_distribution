@@ -57,7 +57,7 @@ define({
         faostat_cultivation_organic_soil_n2o_emission_estimates_description: "",
 
         // layers
-        humid_tropical_forest: "Humid ropical Forest",
+        humid_tropical_forest: "Humid Tropical Forest",
         other_forest: "Other Forest",
         closed_shrubland: "Closed Shrubland",
         open_shrubland: "Open Shrubland",

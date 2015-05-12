@@ -6,7 +6,9 @@
       {
         "title": "gfed4_burned_areas_yearly",
         "description": "gfed4_burned_areas_yearly_description",
-        "downloadID": "GFED4_burned_areas",
+        "download": {
+          "id": "GFED4_burned_areas"
+        },
         "layer":[
           {
             "#COMMENT": "ADDED!",
@@ -46,7 +48,9 @@
       {
         "title": "burned_dry_matter_yearly",
         "description": "burned_dry_matter_yearly_description",
-        "downloadID": "Burned_dry_matter",
+        "download": {
+          "id": "Burned_dry_matter"
+        },
         "layer":[
           {
             "title": "humid_tropical_forest",
@@ -85,7 +89,9 @@
       {
         "title": "organic_soils_area",
         "description": "organic_soils_area_description",
-        "downloadID": "Organic_soils_area",
+        "download": {
+          "id": "Organic_soils_area"
+        },
         "layer":[
           {
             "#COMMENT": "MISSING!",
@@ -113,8 +119,10 @@
       {
         "title": "fuel_biomass_factors",
         "description": "fuel_biomass_factors_description",
-        "downloadID": "fuel_biomass_factors_factors",
-        "global": true,
+        "download": {
+          "id": "Fuel_biomass_factors",
+          "global": true
+        },
         "layer":[
           {
             "title": "humid_tropical_forest",
@@ -163,8 +171,10 @@
       {
         "title": "emission_factors",
         "description": "emission_factors_description",
-        "downloadID": "emission_factors_factors",
-        "global": true,
+        "download": {
+          "id": "Emission_factors",
+          "global": true
+        },
         "layer":[
           {"title": "humid_tropical_forest"},
           {"title": "other_forest"},
@@ -187,7 +197,9 @@
       {
         "title": "climate",
         "description": "climate_description",
-        "downloadID": "Climate",
+        "download": {
+          "id": "Climate"
+        },
         "layer":[
           {
             "title": "jrc_climate_zone_map",
@@ -199,7 +211,9 @@
       {
         "title": "ecology",
         "description": "ecology_description",
-        "downloadID": "Ecology",
+        "download": {
+          "id": "Ecology"
+        },
         "layer":[
           {
             "title": "global_ecological_zones_gez2010",
@@ -211,7 +225,9 @@
       {
         "title": "livestock",
         "description": "livestock_description",
-        "downloadID": "Livestock",
+        "download": {
+          "id": "Livestock"
+        },
         "layer":[
           {
             "title": "gridded_livestock_cattle",
@@ -228,7 +244,9 @@
       {
         "title": "land_cover",
         "description": "land_cover_description",
-        "downloadID": "Land_Cover",
+        "download": {
+          "id": "Land_Cover"
+        },
         "layer":[
           {
             "title": "global_land_cover_glc2000",
@@ -246,7 +264,9 @@
       {
         "title": "faostat_fire_co2_emission_estimates_yearly",
         "description": "faostat_fire_co2_emission_estimates_yearly_description",
-        "downloadID": "FAOSTAT_fire_CO2_emission_estimates",
+        "download": {
+          "id": "FAOSTAT_fire_CO2_emission_estimates"
+        },
         "layer":[
           {
             "title": "humid_tropical_forest",
@@ -285,7 +305,9 @@
       {
         "title": "faostat_fire_n2o_emission_estimates_yearly",
         "description": "faostat_fire_n2o_emission_estimates_yearly_description",
-        "downloadID": "FAOSTAT_fire_N2O_emission_estimates",
+        "download": {
+          "id": "FAOSTAT_fire_N2O_emission_estimates"
+        },
         "layer":[
           {
             "title": "humid_tropical_forest",
@@ -324,7 +346,9 @@
       {
         "title": "faostat_fire_ch4_emission_estimates_yearly",
         "description": "faostat_fire_ch4_emission_estimates_yearly_description",
-        "downloadID": "FAOSTAT_fire_CH4_emission_estimates",
+        "download": {
+          "id": "FAOSTAT_fire_CH4_emission_estimates"
+        },
         "layer":[
           {
             "title": "humid_tropical_forest",
@@ -363,7 +387,9 @@
       {
         "title": "faostat_cultivation_organic_soil_co2_emission_estimates",
         "description": "faostat_cultivation_organic_soil_co2_emission_estimates_description",
-        "downloadID": "FAOSTAT_cultivation_of_organic_soil_CO2_emission_estimates",
+        "download": {
+          "id": "FAOSTAT_cultivation_of_organic_soil_CO2_emission_estimates"
+        },
         "layer":[
           {
             "title": "cropland_organic_soils",
@@ -381,7 +407,9 @@
       {
         "title": "faostat_cultivation_organic_soil_n2o_emission_estimates",
         "description": "faostat_cultivation_organic_soil_n2o_emission_estimates_description",
-        "downloadID": "FAOSTAT_cultivation_of_organic_soil_N2O_emission_estimates",
+        "download": {
+          "id": "FAOSTAT_cultivation_of_organic_soil_N2O_emission_estimates"
+        },
         "layer":[
           {
             "#COMMENT": "COVERAGE_SECTOR_IS_WRONG!",
