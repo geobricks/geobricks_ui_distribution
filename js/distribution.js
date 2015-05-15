@@ -39,7 +39,6 @@ define([
             l: null,
             l_gaul0_highlight: null,
 
-
             // caching layers
             cached_layers:null,
 
@@ -320,7 +319,7 @@ define([
             noWrap: true
         };
         this.CONFIG.m = new FM.Map(id, options, mapOptions);
-        this.CONFIG.m.createMap();
+        this.CONFIG.m.createMap(25, 0);
 
         var layer = {};
         layer.layers = "fenix:gaul0_line_3857"
@@ -343,7 +342,28 @@ define([
         layer.hideLayerInControllerList = true;
         this.CONFIG.l_gaul0_highlight = new FM.layer(layer, {noWrap : true});
         this.CONFIG.m.addLayer(this.CONFIG.l_gaul0_highlight);
+
+
+        this.resetZoom(this.CONFIG.m.map)
     };
+
+    GEOBRICKS_UI_DISTRIBUTION.prototype.resetZoom = function(map) {
+        (function() {
+            var control = new L.Control({position:'topleft'});
+            control.onAdd = function(map) {
+                var azoom = L.DomUtil.create('a','resetzoom');
+                azoom.innerHTML = "<button type='button' class='btn btn-default' style='background-color:#f5f5f5'>Reset Zoom</button>";
+                L.DomEvent
+                    .disableClickPropagation(azoom)
+                    .addListener(azoom, 'click', function() {
+                        map.setView(map.options.center, map.options.zoom);
+                    },azoom);
+                return azoom;
+            };
+            return control;
+        }()).addTo(map);
+    };
+
 
     GEOBRICKS_UI_DISTRIBUTION.prototype.on_change_layer = function(layerDef) {
         if (this.CONFIG.l) {
