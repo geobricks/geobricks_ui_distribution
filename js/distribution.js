@@ -411,5 +411,13 @@ define([
         return translate[label]? translate[label]: label;
     };
 
+    GEOBRICKS_UI_DISTRIBUTION.prototype.refresh = function() {
+        console.log("refresh");
+        $('.chosen-container.chosen-container-single').css('width', '100%');
+        this.CONFIG.m.invalidateSize();
+        console.log(this.CONFIG.m);
+        console.log(this.CONFIG.m.invalidateSize);
+    };
+
     return GEOBRICKS_UI_DISTRIBUTION;
 });
