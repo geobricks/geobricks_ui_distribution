@@ -1,6 +1,8 @@
 define({
     'root' : {
         ghg_spatial_browse: "GHG Spatial Browse",
+        please_select: "Select...",
+
         error: "Error",
         select_a_datatype: "Data Type",
         select_a_product: "Product",
