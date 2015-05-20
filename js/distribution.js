@@ -1,7 +1,7 @@
 define([
     //'jquery',
     'handlebars',
-    'text!geobricks_ui_distribution/html/template.html',
+    'text!geobricks_ui_distribution/html/template.hbs',
     'i18n!geobricks_ui_distribution/nls/translate',
     'text!geobricks_ui_distribution/config/data.json',
     'fenix-map',
@@ -59,7 +59,7 @@ define([
         var source =  $(templates).filter('#main_structure').html();
         var template = Handlebars.compile(source);
         var dynamic_data = {
-            title: translate.ghg_spatial_browse,
+            //title: translate.ghg_spatial_browse,
             select_a_datatype: translate.select_a_datatype,
             select_a_product: translate.select_a_product,
             select_a_layer: translate.select_a_layer,

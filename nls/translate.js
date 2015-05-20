@@ -1,13 +1,12 @@
 define({
     'root' : {
         ghg_spatial_browse: "GHG Spatial Browse",
-        please_select: "Please Select...",
         error: "Error",
-        select_a_datatype: "Select a Datatype",
-        select_a_product: "Select a Product",
-        select_a_layer: "Select a Layer",
-        select_a_country: "Select a Country",
-        select_date: "Select an year",
+        select_a_datatype: "Data Type",
+        select_a_product: "Product",
+        select_a_layer: "Layer",
+        select_a_country: "Country",
+        select_date: "Year",
         show_layer: "Show Layer",
 
         // map
