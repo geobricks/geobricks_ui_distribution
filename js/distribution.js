@@ -301,8 +301,9 @@ define([
     GEOBRICKS_UI_DISTRIBUTION.prototype.build_map = function(id) {
         var options = {
             plugins: { geosearch : false, mouseposition: false, controlloading : false, zoomControl: 'bottomright'},
-            guiController: { overlay : true,  baselayer: true,  wmsLoader: false },
-            gui: {disclaimerfao: true }
+            guiController: { overlay : false,  baselayer: false,  wmsLoader: false },
+            gui: {disclaimerfao: true },
+            usedefaultbaselayers: false
         };
 
         var mapOptions = {
@@ -321,13 +322,20 @@ define([
         this.CONFIG.m = new FM.Map(id, options, mapOptions);
         this.CONFIG.m.createMap(25, 0);
 
+
+        this.CONFIG.m.map.addLayer(new L.TileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+            maxZoom: 16,
+            zIndex: 100
+        }));
+
         var layer = {};
         layer.layers = "fenix:gaul0_line_3857"
         layer.layertitle = translate.boundaries;
         layer.urlWMS = "http://fenix.fao.org/geoserver"
         layer.styles = "gaul0_line"
         layer.opacity='0.9';
-        layer.zindex= 550;
+        layer.zindex= 115;
         this.CONFIG.l_gaul0 = new FM.layer(layer, {noWrap : true});
         this.CONFIG.m.addLayer(this.CONFIG.l_gaul0);
 
@@ -336,18 +344,18 @@ define([
         layer.layertitle = "Administrative unit"
         layer.urlWMS = "http://fenix.fao.org/geoserver"
         layer.opacity='0.7';
-        layer.zindex= 500;
+        layer.zindex= 120;
         layer.style = 'gaul0_highlight_polygon';
         layer.cql_filter="faost_code IN ('0')";
         layer.hideLayerInControllerList = true;
         this.CONFIG.l_gaul0_highlight = new FM.layer(layer, {noWrap : true});
         this.CONFIG.m.addLayer(this.CONFIG.l_gaul0_highlight);
 
-
-        this.resetZoom(this.CONFIG.m.map)
+        // add reset zoom button
+        this.addResetZoom(this.CONFIG.m.map)
     };
 
-    GEOBRICKS_UI_DISTRIBUTION.prototype.resetZoom = function(map) {
+    GEOBRICKS_UI_DISTRIBUTION.prototype.addResetZoom = function(map) {
         (function() {
             var control = new L.Control({position:'topleft'});
             control.onAdd = function(map) {
@@ -378,6 +386,7 @@ define([
             layer.opacity = '0.75';
             layer.defaultgfi = true;
             layer.openlegend = true;
+            layer.zindex = 110;
             layer.lang = "EN";
 
             /* TODO: check if raster */
