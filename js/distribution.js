@@ -1,7 +1,7 @@
 define([
     //'jquery',
     'mustache',
-    'text!geobricks_ui_distribution/html/template.html',
+    'text!geobricks_ui_distribution/html/template.hbs',
     //'FNX_MAPS_LOADING_WINDOW',
     'fenix-map',
     'highcharts',
