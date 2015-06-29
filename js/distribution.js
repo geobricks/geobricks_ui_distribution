@@ -154,6 +154,7 @@ define([
             type: 'POST',
             url: url,
             contentType: "application/json",
+            headers: { "full": true, "dsd": true },
             dataType: 'json',
             data: JSON.stringify(request_filter),
             crossDomain: true,
